@@ -1,0 +1,63 @@
+/* Import Space Mono from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+/* Define your dark mode colors */
+:root {
+  --background-color: #000000; /* Dark background */
+  --text-color: #ffffff; /* Light text */
+  --link-color: #bb86fc; /* Lighter color for links */
+  --border-color: #373737; /* Dark border for elements */
+}
+
+/* Apply the Space Mono font to your website */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Space Mono', monospace; /* Apply Space Mono font */
+}
+
+a {
+  color: var(--link-color);
+}
+
+/* You might also want to change border colors for elements */
+.border-element {
+  border-color: var(--border-color);
+}
+
+/* Additional styles for other elements can be added here */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.fullscreen-image {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.fullscreen-image img {
+    height: 100%;
+    width: auto; /* Adjust width automatically */
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%); /* Center the image horizontally */
+}
+
+.centered-box {
+    z-index: 1;
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 0px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+	position: relative;
+	border: 2px solid #5e3a93;
+}
