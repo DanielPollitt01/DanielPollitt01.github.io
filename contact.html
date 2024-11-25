@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mail - Dan Hermetica</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="defaultstyles.css" type="text/css" media="all">
+    <link rel="icon" type="image/png" href="Images/favicon.png">
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .contact-form {
+            background: rgba(147, 51, 234, 0.1);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 4px;
+            color: white;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(147, 51, 234, 0.6);
+        }
+
+        .form-group textarea {
+            height: 300px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: rgba(147, 51, 234, 0.3);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            color: white;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: 'Space Mono', monospace;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: rgba(147, 51, 234, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Banner -->
+    <nav class="nav-banner">
+        <div class="nav-links">
+            <a href="index.html" class="nav-logo">
+                <img src="Images/logo.png" alt="Logo">
+                <span>Dan Hermetica</span>
+            </a>
+            <div class="nav-right">
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="login.html">Reading</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Mail</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Mail</h1>
+        <p>Get in touch</p>
+    </header>
+
+    <div class="contact-container">
+        <form class="contact-form" id="contactForm" onsubmit="return submitForm(event)">
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Your name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Your email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </div>
+
+    <script>
+        // Navigation hide/show on scroll
+        let lastScroll = 0;
+        const navbar = document.querySelector('.nav-banner');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                navbar.classList.remove('hidden');
+                return;
+            }
+            
+            if (currentScroll > lastScroll && !navbar.classList.contains('hidden')) {
+                navbar.classList.add('hidden');
+            } else if (currentScroll < lastScroll && navbar.classList.contains('hidden')) {
+                navbar.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const subject = document.getElementById('subject').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Basic email validation
+            if (!email.includes('@')) {
+                alert('Please enter a valid email address');
+                return false;
+            }
+
+            // Create mailto link with name and email two lines under the message
+            const mailtoLink = `mailto:danielmalpollitt@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}%0A%0A%0AFrom:%0A${encodeURIComponent(name)}%0A${encodeURIComponent(email)}`;
+            
+            // Open default email client
+            window.location.href = mailtoLink;
+
+            // Reset form
+            document.getElementById('contactForm').reset();
+            
+            return false;
+        }
+    </script>
+</body>
+</html> 

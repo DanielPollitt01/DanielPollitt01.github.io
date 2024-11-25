@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Reading List - Dan Hermetica</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="defaultstyles.css" type="text/css" media="all">
+    <link rel="icon" type="image/png" href="Images/favicon.png">
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .content-container {
+            text-align: center;
+            color: white;
+            padding: 2em;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 10px;
+            background-color: rgba(147, 51, 234, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+            width: 90%;
+        }
+
+        .book-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .book-form input, .book-form select {
+            background-color: rgba(147, 51, 234, 0.1);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .book-form button {
+            background-color: rgba(147, 51, 234, 0.3);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .book-form button:hover {
+            background-color: rgba(147, 51, 234, 0.5);
+        }
+
+        .books-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .books-table th, .books-table td {
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            padding: 8px;
+            text-align: left;
+        }
+
+        .books-table th {
+            background-color: rgba(147, 51, 234, 0.1);
+        }
+
+        .delete-btn {
+            background-color: rgba(255, 0, 0, 0.3);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Banner -->
+    <nav class="nav-banner">
+        <div class="nav-links">
+            <a href="index.html" class="nav-logo">
+                <img src="Images/logo.png" alt="Logo">
+                <span>Dan Hermetica</span>
+            </a>
+            <div class="nav-right">
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="login.html">Reading</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Mail</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Reading List</h1>
+        <p>Track and manage your reading journey</p>
+    </header>
+
+    <div class="content-container">
+        <form class="book-form" id="bookForm">
+            <input type="text" id="title" placeholder="Title" required>
+            <input type="text" id="author" placeholder="Author" required>
+            <input type="number" id="year" placeholder="Year Published" required>
+            <input type="text" id="publisher" placeholder="Publisher" required>
+            <select id="read" required>
+                <option value="">Has been read?</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <select id="rating" required>
+                <option value="">Rating</option>
+                <option value="Good">Good</option>
+                <option value="Meh">Meh</option>
+                <option value="Bad">Bad</option>
+            </select>
+            <button type="submit">Add Book</button>
+        </form>
+
+        <table class="books-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                    <th>Publisher</th>
+                    <th>Read</th>
+                    <th>Rating</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="booksTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_URL = 'https://your-api-url.onrender.com';
+
+        // Load books from API when page loads
+        document.addEventListener('DOMContentLoaded', loadBooks);
+
+        // Handle form submission
+        document.getElementById('bookForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const book = {
+                title: document.getElementById('title').value,
+                author: document.getElementById('author').value,
+                year: document.getElementById('year').value,
+                publisher: document.getElementById('publisher').value,
+                read: document.getElementById('read').value,
+                rating: document.getElementById('rating').value
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/books`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(book)
+                });
+
+                if (response.ok) {
+                    loadBooks();
+                    this.reset();
+                } else {
+                    alert('Error adding book');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error adding book');
+            }
+        });
+
+        async function loadBooks() {
+            try {
+                const response = await fetch(`${API_URL}/api/books`);
+                const books = await response.json();
+                const tableBody = document.getElementById('booksTableBody');
+                
+                tableBody.innerHTML = '';
+                
+                books.forEach(book => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.year}</td>
+                        <td>${book.publisher}</td>
+                        <td>${book.read}</td>
+                        <td>${book.rating}</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteBook('${book._id}')">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error loading books');
+            }
+        }
+
+        async function deleteBook(id) {
+            try {
+                const response = await fetch(`${API_URL}/api/books/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    loadBooks();
+                } else {
+                    alert('Error deleting book');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error deleting book');
+            }
+        }
+        
+        // Navigation hide/show on scroll
+        let lastScroll = 0;
+        const navbar = document.querySelector('.nav-banner');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                navbar.classList.remove('hidden');
+                return;
+            }
+            
+            if (currentScroll > lastScroll && !navbar.classList.contains('hidden')) {
+                // Scrolling down
+                navbar.classList.add('hidden');
+            } else if (currentScroll < lastScroll && navbar.classList.contains('hidden')) {
+                // Scrolling up
+                navbar.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+    
+</body>
+</html> 

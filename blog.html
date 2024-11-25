@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Blog - Dan Hermetica</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="defaultstyles.css" type="text/css" media="all">
+    <link rel="icon" type="image/png" href="Images/favicon.png">
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .blog-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .blog-post {
+            background: rgba(147, 51, 234, 0.1);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .post-image {
+            flex: 0 0 200px;
+            height: 200px;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-content {
+            flex: 1;
+        }
+
+        .post-header {
+            font-family: 'Space Mono', monospace;
+            color: #9333EA;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .post-number {
+            color: rgba(147, 51, 234, 0.8);
+        }
+
+        .post-date {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .post-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            font-family: 'Space Mono', monospace;
+            white-space: pre-wrap;
+        }
+
+        .post-text p {
+            margin: 0 0 10px 0;
+        }
+
+        .greentext {
+            color: #789922;
+        }
+
+        .post-reference {
+            color: #9333EA;
+            text-decoration: none;
+        }
+
+        .post-reference:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Banner -->
+    <nav class="nav-banner">
+        <div class="nav-links">
+            <a href="index.html" class="nav-logo">
+                <img src="Images/logo.png" alt="Logo">
+                <span>Dan Hermetica</span>
+            </a>
+            <div class="nav-right">
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="login.html">Reading</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Mail</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Blog</h1>
+        <p>Thoughts and musings</p>
+    </header>
+
+    <div class="blog-container">
+        <!-- Example blog posts -->
+        <div class="blog-post">
+            <div class="post-image">
+                <img src="https://giffun.ru/wp-content/uploads/2022/12/2779688828_preview_pepe-400x400.gif" alt="comfy">
+            </div>
+            <div class="post-content">
+                <div class="post-header">
+                    <span class="post-number">No.198123</span> 
+                    <span class="post-date">25/11/24(Mon)13:51:33</span>
+                </div>
+                <div class="post-text">
+                    <p>Been working on my personal website for a few months now to get more comfortable with html and not use wordpress as a crutch.</p>
+                    <p>There is nothing wrong with wordpress but i always thought of it as the commercial facebook to the comfy my space and feeling a little nostalgic for the golden age of the web.</p>
+                    <p>Never really got the hang of the ftp side of things either and while i remember it being rather easy when i tried it this time around it kinda broke me, using github for now but I will be coming back around soon.</p>
+                    <p class="greentext">>tfw you can finaly greentext</p>
+                    <p>Feels good man.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Navigation hide/show on scroll
+        let lastScroll = 0;
+        const navbar = document.querySelector('.nav-banner');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                navbar.classList.remove('hidden');
+                return;
+            }
+            
+            if (currentScroll > lastScroll && !navbar.classList.contains('hidden')) {
+                navbar.classList.add('hidden');
+            } else if (currentScroll < lastScroll && navbar.classList.contains('hidden')) {
+                navbar.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html> 
