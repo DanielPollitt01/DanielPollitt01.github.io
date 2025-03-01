@@ -7,6 +7,18 @@
 		<link rel="stylesheet" href="defaultstyles.css" type="text/css" media="all">
 		<link rel="icon" type="image/png" href="Images/favicon.png">
 		<style>
+			.sites-links {
+				display: none;
+				margin-top: 20px;
+				padding: 15px;
+				background-color: rgba(0, 0, 0, 0.7);
+				border-radius: 5px;
+			}
+			
+			.sites-links a {
+				display: block;
+				margin: 5px 0;
+			}
 		</style>
 	</head>
 	<body>
@@ -29,11 +41,43 @@
 		    <a class="links" href="">
 	  	      <b>webring</b>
 		    </a>
+			<a class="links" href="#" id="sites-toggle">
+	  	      <b>sites</b>
+		    </a>
+			
+			<div class="sites-links" id="sites-container">
+				dan@X220:~/sites ls links <br>
+				<a class="links" href="http://4chan.org/"><b>4chan</b></a>
+				<a class="links" href="http://thepiratebay.org/index.html"><b>piratebay</b></a>
+				<a class="links" href="http://1337x.to/"><b>1337</b></a>
+				<a class="links" href="https://cytu.be/r/TheSpooks"><b>cytube</b></a>
+				<a class="links" href="https://vimm.net/"><b>vimm</b></a>
+				<a class="links" href="https://my.vultr.com/"><b>vultr</b></a>
+				<a class="links" href="https://fitgirl-repacks.site/"><b>fitgirl</b></a>
+				<a class="links" href="https://eztv.re/"><b>eztv</b></a>
+				<a class="links" href="https://getcomics.info/"><b>comics</b></a>
+				<a class="links" href="https://myrient.erista.me/"><b>3ds</b></a>
+				<a class="links" href="https://lainchan.org/"><b>lainchan</b></a>
+				<a class="links" href="https://sizeof.cat/post/lainring/"><b>lainring</b></a>
+				<a class="links" href="https://4chanlit.fandom.com/wiki/Recommended_Reading/Literature_by_type"><b>readingrecs</b></a>
+				<a class="links" href="https://lemmy.world/communities?listingType=All&page=2"><b>lemmy</b></a>
+			</div>
 		  </div>
 		</div>
 		<div class="footer">
 			<img src="">
-
 		</div>
+		
+		<script>
+			document.getElementById('sites-toggle').addEventListener('click', function(e) {
+				e.preventDefault();
+				const container = document.getElementById('sites-container');
+				if (container.style.display === 'block') {
+					container.style.display = 'none';
+				} else {
+					container.style.display = 'block';
+				}
+			});
+		</script>
 	</body>
 </html>
